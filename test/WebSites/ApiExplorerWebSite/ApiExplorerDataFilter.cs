@@ -53,12 +53,20 @@ namespace ApiExplorerWebSite
             {
                 var parameterData = new ApiExplorerParameterData()
                 {
-                    IsOptional = parameter.IsOptional,
                     Name = parameter.Name,
-                    Source = parameter.Source.ToString(),
-                    Type = parameter?.Type?.FullName,
-                    ConstraintTypes = parameter?.Constraints?.Select(c => c.GetType().Name).ToArray(),
+                    Source = parameter.Source.Id,
+                    Type = parameter.Type?.FullName,
                 };
+
+                if (parameter.RouteInfo != null)
+                {
+                    parameterData.RouteInfo = new ApiExplorerParameterRouteInfo()
+                    {
+                        ConstraintTypes = parameter.RouteInfo.Constraints?.Select(c => c.GetType().Name).ToArray(),
+                        DefaultValue = parameter.RouteInfo.DefaultValue,
+                        IsOptional = parameter.RouteInfo.IsOptional,
+                    };
+                }
 
                 data.ParameterDescriptions.Add(parameterData);
             }
@@ -96,15 +104,23 @@ namespace ApiExplorerWebSite
         // Used to serialize data between client and server
         private class ApiExplorerParameterData
         {
-            public bool IsOptional { get; set; }
-
             public string Name { get; set; }
+
+            public ApiExplorerParameterRouteInfo RouteInfo { get; set; }
 
             public string Source { get; set; }
 
             public string Type { get; set; }
+        }
 
+        // Used to serialize data between client and server
+        private class ApiExplorerParameterRouteInfo
+        {
             public string[] ConstraintTypes { get; set; }
+
+            public object DefaultValue { get; set; }
+
+            public bool IsOptional { get; set; }
         }
 
         // Used to serialize data between client and server

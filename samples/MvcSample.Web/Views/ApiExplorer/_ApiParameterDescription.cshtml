@@ -1,0 +1,10 @@
+﻿@using Microsoft.AspNet.Mvc.Description
+@model ApiParameterDescription
+
+@Model.Name - @(Model.Type?.FullName ?? "Unknown") - @Model.Source.ToString()
+@if (Model.RouteInfo?.Constraints != null && Model.RouteInfo.Constraints.Any())
+{
+    var constraints = Model.RouteInfo.Constraints;
+    Write("-Constraint:" + string.Join(", ", constraints.Select(c => c.GetType()?.Name?.Replace("RouteConstraint", ""))));
+}
+- Default value: @(Model.RouteInfo?.DefaultValue ?? " none")

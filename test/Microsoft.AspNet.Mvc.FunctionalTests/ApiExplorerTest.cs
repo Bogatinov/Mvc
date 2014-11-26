@@ -176,9 +176,9 @@ namespace Microsoft.AspNet.Mvc.FunctionalTests
 
             var parameter = Assert.Single(description.ParameterDescriptions);
             Assert.Equal("id", parameter.Name);
-            Assert.False(parameter.IsOptional);
+            Assert.False(parameter.RouteInfo.IsOptional);
             Assert.Equal("Path", parameter.Source);
-            Assert.Empty(parameter.ConstraintTypes);
+            Assert.Empty(parameter.RouteInfo.ConstraintTypes);
         }
 
         [Fact]
@@ -201,9 +201,9 @@ namespace Microsoft.AspNet.Mvc.FunctionalTests
 
             var parameter = Assert.Single(description.ParameterDescriptions);
             Assert.Equal("integer", parameter.Name);
-            Assert.False(parameter.IsOptional);
+            Assert.False(parameter.RouteInfo.IsOptional);
             Assert.Equal("Path", parameter.Source);
-            Assert.Equal("IntRouteConstraint", Assert.Single(parameter.ConstraintTypes));
+            Assert.Equal("IntRouteConstraint", Assert.Single(parameter.RouteInfo.ConstraintTypes));
         }
 
         [Fact]
@@ -226,7 +226,7 @@ namespace Microsoft.AspNet.Mvc.FunctionalTests
 
             var parameter = Assert.Single(description.ParameterDescriptions);
             Assert.Equal("parameter", parameter.Name);
-            Assert.False(parameter.IsOptional);
+            Assert.False(parameter.RouteInfo.IsOptional);
             Assert.Equal("Path", parameter.Source);
         }
 
@@ -252,9 +252,9 @@ namespace Microsoft.AspNet.Mvc.FunctionalTests
 
             var parameter = Assert.Single(description.ParameterDescriptions);
             Assert.Equal("integer", parameter.Name);
-            Assert.False(parameter.IsOptional);
+            Assert.False(parameter.RouteInfo.IsOptional);
             Assert.Equal("Path", parameter.Source);
-            Assert.Equal("IntRouteConstraint", Assert.Single(parameter.ConstraintTypes));
+            Assert.Equal("IntRouteConstraint", Assert.Single(parameter.RouteInfo.ConstraintTypes));
         }
 
         [Fact]
@@ -281,19 +281,19 @@ namespace Microsoft.AspNet.Mvc.FunctionalTests
             Assert.Equal(expectedRelativePath, description.RelativePath);
 
             var month = Assert.Single(description.ParameterDescriptions, p => p.Name == "month");
-            Assert.False(month.IsOptional);
+            Assert.False(month.RouteInfo.IsOptional);
             Assert.Equal("Path", month.Source);
-            Assert.Equal("RangeRouteConstraint", Assert.Single(month.ConstraintTypes));
+            Assert.Equal("RangeRouteConstraint", Assert.Single(month.RouteInfo.ConstraintTypes));
 
             var day = Assert.Single(description.ParameterDescriptions, p => p.Name == "day");
-            Assert.False(day.IsOptional);
+            Assert.False(day.RouteInfo.IsOptional);
             Assert.Equal("Path", day.Source);
-            Assert.Equal("IntRouteConstraint", Assert.Single(day.ConstraintTypes));
+            Assert.Equal("IntRouteConstraint", Assert.Single(day.RouteInfo.ConstraintTypes));
 
             var year = Assert.Single(description.ParameterDescriptions, p => p.Name == "year");
-            Assert.False(year.IsOptional);
+            Assert.False(year.RouteInfo.IsOptional);
             Assert.Equal("Path", year.Source);
-            Assert.Equal("IntRouteConstraint", Assert.Single(year.ConstraintTypes));
+            Assert.Equal("IntRouteConstraint", Assert.Single(year.RouteInfo.ConstraintTypes));
         }
 
         [Fact]
@@ -319,19 +319,19 @@ namespace Microsoft.AspNet.Mvc.FunctionalTests
             Assert.Equal(expectedRelativePath, description.RelativePath);
 
             var month = Assert.Single(description.ParameterDescriptions, p => p.Name == "month");
-            Assert.False(month.IsOptional);
+            Assert.False(month.RouteInfo.IsOptional);
             Assert.Equal("Path", month.Source);
-            Assert.Equal("RangeRouteConstraint", Assert.Single(month.ConstraintTypes));
+            Assert.Equal("RangeRouteConstraint", Assert.Single(month.RouteInfo.ConstraintTypes));
 
             var day = Assert.Single(description.ParameterDescriptions, p => p.Name == "day");
-            Assert.True(day.IsOptional);
+            Assert.True(day.RouteInfo.IsOptional);
             Assert.Equal("Path", day.Source);
-            Assert.Equal("IntRouteConstraint", Assert.Single(day.ConstraintTypes));
+            Assert.Equal("IntRouteConstraint", Assert.Single(day.RouteInfo.ConstraintTypes));
 
             var year = Assert.Single(description.ParameterDescriptions, p => p.Name == "year");
-            Assert.True(year.IsOptional);
+            Assert.True(year.RouteInfo.IsOptional);
             Assert.Equal("Path", year.Source);
-            Assert.Equal("IntRouteConstraint", Assert.Single(year.ConstraintTypes));
+            Assert.Equal("IntRouteConstraint", Assert.Single(year.RouteInfo.ConstraintTypes));
         }
 
         [Fact]
@@ -383,7 +383,7 @@ namespace Microsoft.AspNet.Mvc.FunctionalTests
             Assert.Equal("ApiExplorerRouteAndPathParametersInformation/Optional/{id}", description.RelativePath);
 
             var id = Assert.Single(description.ParameterDescriptions, p => p.Name == "id");
-            Assert.True(id.IsOptional);
+            Assert.True(id.RouteInfo.IsOptional);
             Assert.Equal("Path", id.Source);
         }
 
@@ -741,15 +741,23 @@ namespace Microsoft.AspNet.Mvc.FunctionalTests
         // Used to serialize data between client and server
         private class ApiExplorerParameterData
         {
-            public bool IsOptional { get; set; }
-
             public string Name { get; set; }
+
+            public ApiExplorerParameterRouteInfo RouteInfo { get; set; }
 
             public string Source { get; set; }
 
             public string Type { get; set; }
+        }
 
+        // Used to serialize data between client and server
+        private class ApiExplorerParameterRouteInfo
+        {
             public string[] ConstraintTypes { get; set; }
+
+            public object DefaultValue { get; set; }
+
+            public bool IsOptional { get; set; }
         }
 
         // Used to serialize data between client and server
