@@ -156,7 +156,7 @@ namespace Microsoft.AspNet.Mvc
 
                 if (wrapperContext.WrapperProvider != null)
                 {
-                    responseData = wrapperContext.WrapperProvider.Wrap(responseData);
+                    responseData = wrapperContext.WrapperProvider.Wrap(wrapperContext.OriginalType, responseData);
                 }
 
                 dataContractSerializer.WriteObject(xmlWriter, responseData);

@@ -6,7 +6,7 @@ namespace Microsoft.AspNet.Mvc
     {
         bool TryGetWrappingType(Type originalType, out Type wrappingType);
 
-        object Wrap(object obj);
+        object Wrap(Type declaredType, object obj);
 
         object Unwrap(object obj);
     }

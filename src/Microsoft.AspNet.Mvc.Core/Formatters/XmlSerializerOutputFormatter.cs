@@ -96,7 +96,6 @@ namespace Microsoft.AspNet.Mvc
             var type = GetSerializableType(declaredType, runtimeType);
             var wrapperContext = GetWrapperType(type);
             type = wrapperContext.WrappingType ?? wrapperContext.OriginalType;
-
             return CreateSerializer(type) != null;
         }
 
@@ -145,7 +144,7 @@ namespace Microsoft.AspNet.Mvc
             using (var xmlWriter = CreateXmlWriter(outputStream, tempWriterSettings))
             {
                 var obj = context.Object;
-                var runtimeType = obj == null ? null : obj.GetType();
+                var runtimeType = obj?.GetType();
 
                 var type = GetSerializableType(context.DeclaredType, runtimeType);
                 var wrapperContext = GetWrapperType(type);
@@ -154,10 +153,14 @@ namespace Microsoft.AspNet.Mvc
 
                 if(wrapperContext.WrapperProvider != null)
                 {
-                    obj = wrapperContext.WrapperProvider.Wrap(obj);
+                    obj = wrapperContext.WrapperProvider.Wrap(wrapperContext.OriginalType, obj);
                 }
 
                 xmlSerializer.Serialize(xmlWriter, obj);
+                //TryGetDelegatingTypeForIEnumerableGenericOrSame(ref type);
+                //var xmlSerializer = CreateSerializer(type);
+                //var value = GetTypeRemappingConstructor(type).Invoke(new object[] { context.Object });
+                //xmlSerializer.Serialize(xmlWriter, value);
             }
 
             return Task.FromResult(true);

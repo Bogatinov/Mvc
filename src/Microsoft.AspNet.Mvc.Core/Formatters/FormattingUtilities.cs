@@ -1,6 +1,9 @@
 // Copyright (c) Microsoft Open Technologies, Inc. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
 #if ASPNET50
 using System.Runtime.Serialization;
 #endif
@@ -48,5 +51,15 @@ namespace Microsoft.AspNet.Mvc
                 CheckCharacters = false
             };
         }
+        
+        /// <summary>
+        /// A <see cref="Type"/> representing <see cref="IEnumerable{T}"/>.
+        /// </summary>
+        public static readonly Type EnumerableInterfaceGenericType = typeof(IEnumerable<>);
+
+        /// <summary>
+        /// A <see cref="Type"/> representing <see cref="DelegatingEnumerable{T}"/>.
+        /// </summary>
+        public static readonly Type DelegatingEnumerableGenericType = typeof(DelegatingEnumerable<>);
     }
 }

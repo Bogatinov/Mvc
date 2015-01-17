@@ -64,7 +64,7 @@ namespace UrlHelperWebSite.Controllers
     {
         public bool TryGetWrappingType(Type originalType, out Type wrappingType)
         {
-            bool hasWrappingType = false;
+            var hasWrappingType = false;
             wrappingType = null;
 
             if(originalType == typeof(Person))
@@ -88,7 +88,7 @@ namespace UrlHelperWebSite.Controllers
             return new Person() { Id = personWrapper.Id, Name = personWrapper.Name };
         }
 
-        public object Wrap(object obj)
+        public object Wrap(Type declaredType, object obj)
         {
             var person = obj as Person;
 
