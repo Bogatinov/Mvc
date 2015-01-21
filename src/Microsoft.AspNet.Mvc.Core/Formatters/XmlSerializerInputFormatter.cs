@@ -157,7 +157,7 @@ namespace Microsoft.AspNet.Mvc
                 var deserializedObject = serializer.Deserialize(xmlReader);
                 if (wrapperContext.WrapperProvider != null)
                 {
-                    deserializedObject = wrapperContext.WrapperProvider.Unwrap(deserializedObject);
+                    deserializedObject = wrapperContext.WrapperProvider.Unwrap(type, deserializedObject);
                 }
 
                 return Task.FromResult(deserializedObject);

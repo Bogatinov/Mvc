@@ -19,7 +19,7 @@ namespace Microsoft.AspNet.Mvc
         }
 
         /// <inheritdoc />
-        public object Unwrap(object obj)
+        public object Unwrap(Type declaredType, object obj)
         {
             throw new NotImplementedException();
         }

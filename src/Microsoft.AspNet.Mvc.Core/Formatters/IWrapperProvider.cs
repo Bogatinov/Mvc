@@ -8,6 +8,6 @@ namespace Microsoft.AspNet.Mvc
 
         object Wrap(Type declaredType, object obj);
 
-        object Unwrap(object obj);
+        object Unwrap(Type declaredType, object obj);
     }
 }

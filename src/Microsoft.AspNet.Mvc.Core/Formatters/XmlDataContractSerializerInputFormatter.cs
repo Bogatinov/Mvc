@@ -159,7 +159,7 @@ namespace Microsoft.AspNet.Mvc
 
                 if(wrapperContext.WrapperProvider != null)
                 {
-                    deserializedObject = wrapperContext.WrapperProvider.Unwrap(deserializedObject);
+                    deserializedObject = wrapperContext.WrapperProvider.Unwrap(type, deserializedObject);
                 }
 
                 return Task.FromResult(deserializedObject);

@@ -148,8 +148,8 @@ namespace Microsoft.AspNet.Mvc
             {
                 var responseData = context.Object;
                 var runtimeType = responseData == null ? null : responseData.GetType();
-
                 var type = GetSerializableType(context.DeclaredType, runtimeType);
+
                 var wrapperContext = GetWrapperType(type);
                 type = wrapperContext.WrappingType ?? wrapperContext.OriginalType;
                 var dataContractSerializer = CreateSerializer(type);

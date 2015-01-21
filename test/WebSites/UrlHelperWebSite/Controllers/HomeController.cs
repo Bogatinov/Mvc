@@ -76,7 +76,7 @@ namespace UrlHelperWebSite.Controllers
             return hasWrappingType;
         }
 
-        public object Unwrap(object obj)
+        public object Unwrap(Type declaredType, object obj)
         {
             var personWrapper = obj as PersonWrapper;
 
